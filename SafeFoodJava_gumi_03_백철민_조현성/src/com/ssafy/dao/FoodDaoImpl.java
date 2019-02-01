@@ -21,31 +21,31 @@ public class FoodDaoImpl implements FoodDao{
 		loadData();
 	}
 	/**
-	 * �떇�뭹 �쁺�뼇�븰 �젙蹂댁� �떇�뭹 �젙蹂대��  xml �뙆�씪�뿉�꽌 �씫�뼱�삩�떎.11111
+	 * 식품 영양학 정보와 식품 정보를  xml 파일에서 읽어온다.
 	 */
 	public void loadData() {
 		
-		//foods = //  FoodNutritionSaxPaser瑜� �씠�슜�븯�뿬 Food �뜲�씠�꽣�뱾�쓣 媛��졇�삩�떎
+		foods = //  FoodNutritionSaxPaser를 이용하여 Food 데이터들을 가져온다
 				
 				
 	}
 	
 	
 	/**
-	 * 寃��깋 議곌굔(key) 寃��깋 �떒�뼱(word)�뿉 �빐�떦�븯�뒗 �떇�뭹 �젙蹂�(Food)�쓽 媛쒖닔瑜� 諛섑솚. 
-	 * web�뿉�꽌 援ы쁽�븷 �궡�슜. 
-	 * web�뿉�꽌 �럹�씠吏� 泥섎━�떆 �븘�슂 
-	 * @param bean  寃��깋 議곌굔怨� 寃��깋 �떒�뼱媛� �엳�뒗 媛앹껜
-	 * @return 議고쉶�븳  �떇�뭹 媛쒖닔
+	 * 검색 조건(key) 검색 단어(word)에 해당하는 식품 정보(Food)의 개수를 반환. 
+	 * web에서 구현할 내용. 
+	 * web에서 페이징 처리시 필요 
+	 * @param bean  검색 조건과 검색 단어가 있는 객체
+	 * @return 조회한  식품 개수
 	 */
 	public int foodCount(FoodPageBean  bean){
 		return foods.size();
 	}
 	
 	/**
-	 * 寃��깋 議곌굔(key) 寃��깋 �떒�뼱(word)�뿉 �빐�떦�븯�뒗 �떇�뭹 �젙蹂�(Food)瑜�  寃��깋�빐�꽌 諛섑솚.  
-	 * @param bean  寃��깋 議곌굔怨� 寃��깋 �떒�뼱媛� �엳�뒗 媛앹껜
-	 * @return 議고쉶�븳 �떇�뭹 紐⑸줉
+	 * 검색 조건(key) 검색 단어(word)에 해당하는 식품 정보(Food)를  검색해서 반환.  
+	 * @param bean  검색 조건과 검색 단어가 있는 객체
+	 * @return 조회한 식품 목록
 	 */
 	public List<Food> searchAll(FoodPageBean  bean){
 		List<Food> finds = new LinkedList<Food>();
@@ -64,10 +64,10 @@ public class FoodDaoImpl implements FoodDao{
 
 				
 				
-				//�젣議곗궗 寃��깋  援ы쁽
+				//제조사 검색  구현
 				
 				
-				// �썝�옱猷� 寃��깋 援ы쁽
+				// 원재료 검색 구현
 				
 				
 				
@@ -85,23 +85,23 @@ public class FoodDaoImpl implements FoodDao{
 	}
 	
 	/**
-	 * �떇�뭹 肄붾뱶�뿉 �빐�떦�븯�뒗 �떇�뭹�젙蹂대�� 寃��깋�빐�꽌 諛섑솚. 
-	 * @param code	寃��깋�븷 �떇�뭹 肄붾뱶
-	 * @return	�떇�뭹 肄붾뱶�뿉 �빐�떦�븯�뒗 �떇�뭹 �젙蹂�, �뾾�쑝硫� null�씠 由ы꽩�맖
+	 * 식품 코드에 해당하는 식품정보를 검색해서 반환. 
+	 * @param code	검색할 식품 코드
+	 * @return	식품 코드에 해당하는 식품 정보, 없으면 null이 리턴됨
 	 */
 	public Food search(int code) {
 		
 		
 		
-		// 肄붾뱶�뿉 留욌뒗 �떇�뭹 寃��깋�븯�뿬 由ы꽩
+		// 코드에 맞는 식품 검색하여 리턴
 		
 		
 		return null;
 	}
 
 	/**
-	 * 媛��옣 留롮씠 寃��깋�븳 Food  �젙蹂� 由ы꽩�븯湲� 
-	 * web�뿉�꽌 援ы쁽�븷 �궡�슜.  
+	 * 가장 많이 검색한 Food  정보 리턴하기 
+	 * web에서 구현할 내용.  
 	 * @return
 	 */
 	public List<Food> searchBest() {
@@ -116,12 +116,12 @@ public class FoodDaoImpl implements FoodDao{
 		FoodDaoImpl dao = new FoodDaoImpl();
 		dao.loadData();
 		System.out.println(dao.search(1));
-		System.out.println("===========================material濡� 寃��깋=================================");
-		print(dao.searchAll(new FoodPageBean("material", "媛먯옄�쟾遺�", null, 0)));
-		System.out.println("===========================maker濡� 寃��깋=================================");
-		print(dao.searchAll(new FoodPageBean("maker", "鍮숆렇�젅", null, 0)));
-		System.out.println("===========================name�쑝濡� 寃��깋=================================");
-		print(dao.searchAll(new FoodPageBean("name", "�씪硫�", null, 0)));
+		System.out.println("===========================material로 검색=================================");
+		print(dao.searchAll(new FoodPageBean("material", "감자전분", null, 0)));
+		System.out.println("===========================maker로 검색=================================");
+		print(dao.searchAll(new FoodPageBean("maker", "빙그레", null, 0)));
+		System.out.println("===========================name으로 검색=================================");
+		print(dao.searchAll(new FoodPageBean("name", "라면", null, 0)));
 		System.out.println("============================================================");
 		print(dao.searchAll(null));
 		System.out.println("============================================================");
