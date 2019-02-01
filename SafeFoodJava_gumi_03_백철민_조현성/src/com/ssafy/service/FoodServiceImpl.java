@@ -19,15 +19,18 @@ public class FoodServiceImpl implements FoodService{
 	}
 	public Food search(int code) {
 
-
-		
-		
-		//  code에  맞는 식품 정보를 검색하고, 검색된 식품의 원재료에 알레르기 성분이 있는지 확인하여 Food 정보에 입력한다.
-		
-		
-		
-		
-		return null;
+		Food food = dao.search(code);
+		String s="";
+		String[] str = food.getMaterial().split(",");
+		for(String allergy : allergys) {
+			for(String material : str) {
+				if(material.contains(allergy)) {
+					s += (allergy + " ");
+				}
+			}
+		}
+		food.setAllergy(s);
+		return food;
 	}
 	public List<Food> searchBest() {
 		return dao.searchBest();
