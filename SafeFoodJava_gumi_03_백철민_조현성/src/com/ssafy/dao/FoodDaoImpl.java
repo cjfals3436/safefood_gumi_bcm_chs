@@ -21,7 +21,7 @@ public class FoodDaoImpl implements FoodDao{
 		loadData();
 	}
 	/**
-	 * �떇�뭹 �쁺�뼇�븰 �젙蹂댁� �떇�뭹 �젙蹂대��  xml �뙆�씪�뿉�꽌 �씫�뼱�삩�떎.
+	 * �떇�뭹 �쁺�뼇�븰 �젙蹂댁� �떇�뭹 �젙蹂대��  xml �뙆�씪�뿉�꽌 �씫�뼱�삩�떎.11111
 	 */
 	public void loadData() {
 		
