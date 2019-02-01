@@ -407,7 +407,7 @@ public class FoodInfoView{
 			mainP.add(leftN);
 			mainP.add(right);
 			add(mainP, "Center");
-
+			////
 			String[][] temp = new String[foodIngestList.size()][4];
 			int count = 0;
 			DefaultTableModel m = (DefaultTableModel)foodTable.getModel();
