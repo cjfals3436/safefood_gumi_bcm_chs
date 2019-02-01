@@ -189,8 +189,8 @@ public class FoodInfoView{
 		JPanel temp = new JPanel(new GridLayout(1,2));
 		temp.add(new JLabel("섭취 수량"));
 		temp.add(numberTf);
-		//leftBottom.add(temp);
-		//leftBottom.add(addBt);
+		leftBottom.add(temp);
+		leftBottom.add(addBt);
 		
 		left.add(new JLabel("상품 정보", JLabel.CENTER),"North");
 		left.add(leftCenter,"Center");

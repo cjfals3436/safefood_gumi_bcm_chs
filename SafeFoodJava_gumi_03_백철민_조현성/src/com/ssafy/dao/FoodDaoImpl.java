@@ -2,17 +2,10 @@ package com.ssafy.dao;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import com.ssafy.util.FoodNutritionSAXHandler;
-import com.ssafy.util.FoodSAXHandler;
 import com.ssafy.util.FoodSaxParser;
 import com.ssafy.vo.Food;
 import com.ssafy.vo.FoodPageBean;
-import com.ssafy.vo.SafeFoodException;
 
 public class FoodDaoImpl implements FoodDao{
 	private List<Food> foods;
@@ -76,18 +69,6 @@ public class FoodDaoImpl implements FoodDao{
 					}
 				}
 				
-				
-				//제조사 검색  구현
-				
-				
-				// 원재료 검색 구현
-				
-				
-				
-				
-				
-				
-				
 			}else {
 				finds = foods;
 			}
@@ -103,15 +84,11 @@ public class FoodDaoImpl implements FoodDao{
 	 * @return	식품 코드에 해당하는 식품 정보, 없으면 null이 리턴됨
 	 */
 	public Food search(int code) {
-		
-		
 		for(Food f : foods) {
 			if(f.getCode() == code) {
 				return f;
 			}
 		}
-		
-		
 		return null;
 	}
 
