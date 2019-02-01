@@ -32,6 +32,23 @@ import com.ssafy.vo.Food;
 import com.ssafy.vo.FoodPageBean;
 import com.ssafy.vo.SafeFoodException;
 
+class FoodIngestView extends JFrame{
+	FoodIngestView(){
+		setTitle("섭취 영양 정보 관리");
+        
+        JPanel NewWindowContainer = new JPanel();
+        setContentPane(NewWindowContainer);
+        
+        
+        
+        
+        
+        setSize(1000,400);
+        setResizable(false);
+        setVisible(true);
+
+	}
+}
 
 public class FoodInfoView{
 	
@@ -83,12 +100,72 @@ public class FoodInfoView{
 					frame.setVisible(false);
 				}else if(source == searchBt) { 
 					searchFoods();
+				}else if(source == addBt) {
+					new FoodIngestView();
 				}
 			} catch (SafeFoodException ue) {
 			     ue.printStackTrace();	
 			}
 		}
 	};
+	public void repaint() {
+		/*왼쪽 화면을 위한 설정 */
+		JPanel left = new JPanel(new BorderLayout());
+		JPanel leftCenter = new JPanel(new GridLayout(1, 2));
+		JPanel leftR = new JPanel(new GridLayout(10, 2));
+		String[] nut= {"총 용량","칼로리","탄수화물","단백질","지방","당류","나트륨","콜레스테롤","포화 지방산","트렌스지방"};
+		int size = nut.length;
+		JLabel nutLabel[] = new JLabel[size];
+		nutritionL = new JLabel[size];
+		for (int i = 0; i <size; i++) {
+			nutLabel[i] = new JLabel(nut[i]);
+			nutritionL[i]=new JLabel("");
+			leftR.add(nutLabel[i]);
+			leftR.add(nutritionL[i]);
+		}
+		imgL = new JLabel();
+		leftCenter.add(imgL);
+		leftCenter.add(leftR);
+		
+		JPanel leftBottom = new JPanel(new GridLayout(5, 2));
+		String[] foods= {"이름","제조사","원재료","알레르기"};
+		int foodSize = foods.length;
+		JLabel[] foodLabel = new JLabel[foodSize];
+		foodInfoL = new JLabel[foodSize];
+		for (int i = 0; i <foodSize; i++) {
+			foodLabel[i] = new JLabel(foods[i]);
+			foodInfoL[i] = new JLabel("");
+			leftBottom.add(foodLabel[i]);
+			leftBottom.add(foodInfoL[i]);
+		}
+		numberTf = new JTextField();
+		addBt = new JButton("섭취 추가");
+		JPanel temp = new JPanel(new GridLayout(1,2));
+		temp.add(new JLabel("섭취 수량"));
+		temp.add(numberTf);
+		leftBottom.add(temp);
+		leftBottom.add(addBt);
+		
+		left.add(new JLabel("상품 정보", JLabel.CENTER),"North");
+		left.add(leftCenter,"Center");
+		left.add(leftBottom,"South");
+		
+		
+		
+		JPanel mainP = new JPanel(new GridLayout(1, 2));
+		mainP.add(left);
+		//mainP.add(right);
+		frame.add(mainP,"Center");
+		
+		/*이벤트 연결*/
+		foodTable.addMouseListener(handler);
+		addBt.addActionListener(buttonHandler);
+		searchBt.addActionListener(buttonHandler);
+//		closeBt.addActionListener(buttonHandler);
+		showFoods();
+		
+		
+	}
 	MouseAdapter handler = new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -189,8 +266,8 @@ public class FoodInfoView{
 		JPanel temp = new JPanel(new GridLayout(1,2));
 		temp.add(new JLabel("섭취 수량"));
 		temp.add(numberTf);
-		//leftBottom.add(temp);
-		//leftBottom.add(addBt);
+		leftBottom.add(temp);
+		leftBottom.add(addBt);
 		
 		left.add(new JLabel("상품 정보", JLabel.CENTER),"North");
 		left.add(leftCenter,"Center");
