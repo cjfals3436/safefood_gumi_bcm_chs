@@ -11,6 +11,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -32,23 +33,7 @@ import com.ssafy.vo.Food;
 import com.ssafy.vo.FoodPageBean;
 import com.ssafy.vo.SafeFoodException;
 
-class FoodIngestView extends JFrame{
-	FoodIngestView(){
-		setTitle("섭취 영양 정보 관리");
-        
-        JPanel NewWindowContainer = new JPanel();
-        setContentPane(NewWindowContainer);
-        
-        
-        
-        
-        
-        setSize(1000,400);
-        setResizable(false);
-        setVisible(true);
 
-	}
-}
 
 public class FoodInfoView{
 	
@@ -88,8 +73,23 @@ public class FoodInfoView{
 	/**화면에 표시하고 있는 상품*/
 	private Food curfood;
 	
-
 	
+	class foodIngest{
+		int code;
+		String name;
+		String quantity;
+		String date;
+		public foodIngest(int code, String name, String quantity, String date) {
+			super();
+			this.code = code;
+			this.name = name;
+			this.quantity = quantity;
+			this.date = date;
+		}
+		
+	}
+	
+	private ArrayList<foodIngest> foodIngestList;
 
 	private ActionListener buttonHandler = new ActionListener() {
 		@Override
@@ -101,6 +101,7 @@ public class FoodInfoView{
 				}else if(source == searchBt) { 
 					searchFoods();
 				}else if(source == addBt) {
+					foodIngestList.add(new foodIngest(curfood.getCode(),curfood.getName(),numberTf.getText(),null));
 					new FoodIngestView();
 				}
 			} catch (SafeFoodException ue) {
@@ -232,6 +233,7 @@ public class FoodInfoView{
 
 	/**메인 화면인 상품 목록을 위한 화면 셋팅하는 메서드  */
 	public void setMain(){
+		foodIngestList = new ArrayList<>();
 		/*왼쪽 화면을 위한 설정 */
 		JPanel left = new JPanel(new BorderLayout());
 		JPanel leftCenter = new JPanel(new GridLayout(1, 2));
@@ -339,5 +341,136 @@ public class FoodInfoView{
 		new FoodInfoView();
 	}
 	
+	
+	class FoodIngestView extends JFrame {
+		FoodIngestView() {
+			JLabel[] nutritionL;
+			DefaultTableModel foodModel;
+			JTable foodTable;
+			JScrollPane foodPan;
+			JButton exit= new JButton("종료"); 
+			JButton foodInfo = new JButton("상품 정보");
+			JButton cWeek =new JButton("이번 주");
+			JButton cMonth= new JButton("이번 달");
+			JButton cYear = new JButton("올 해");
+			
+			
+			JPanel mainP = new JPanel(new GridLayout(1, 2));
+
+			setTitle("섭취 영양 정보 관리");
+
+			JPanel NewWindowContainer = new JPanel();
+			setContentPane(NewWindowContainer);
+
+			/* 왼쪽 화면을 위한 설정 */
+			JPanel leftN = new JPanel(new BorderLayout());
+			JPanel leftC = new JPanel(new GridLayout(10, 1));
+			JPanel leftS = new JPanel(new GridLayout(1, 4));
+			leftS.add(foodInfo,"Center");
+			leftS.add(exit,"Center");
+			String[] nut = { "총 용량", "칼로리", "탄수화물", "단백질", "지방", "당류", "나트륨", "콜레스테롤", "포화 지방산", "트렌스지방" };
+			int size = nut.length;
+			JLabel nutLabel[] = new JLabel[size];
+			nutritionL = new JLabel[size];
+			for (int i = 0; i < size; i++) {
+				nutLabel[i] = new JLabel(nut[i]);
+				
+				nutritionL[i] = new JLabel("");
+				leftC.add(nutLabel[i]);
+				leftC.add(nutritionL[i]);
+			}
+
+			leftN.add(new JLabel("섭취 영양 정보", JLabel.CENTER), "North");
+			leftN.add(leftC, "Center");
+			leftN.add(leftS,"South");
+			
+			
+			
+			/* 오른쪽 화면을 위한 설정 */
+			JPanel right = new JPanel(new BorderLayout());
+			JPanel rightCenter = new JPanel(new BorderLayout());
+			JPanel rightS = new JPanel(new GridLayout(1,3));
+			rightS.add(cWeek);
+			rightS.add(cMonth);
+			rightS.add(cYear);
+			String[] title = {"번호","상품명","수량","섭취일"};
+			foodModel = new DefaultTableModel(title, 10);
+			foodTable = new JTable(foodModel);
+			foodPan = new JScrollPane(foodTable);
+			foodTable.setColumnSelectionAllowed(true);
+			right.add(new JLabel("상품 목록", JLabel.CENTER), "North");
+			
+			right.add(rightS,"Center");
+			rightCenter.add(foodPan, "South");
+			right.add(rightCenter, "South");
+			
+			mainP.add(leftN);
+			mainP.add(right);
+			add(mainP, "Center");
+
+			String[][] temp = new String[foodIngestList.size()][4];
+			int count = 0;
+			DefaultTableModel m = (DefaultTableModel)foodTable.getModel();
+			for(foodIngest f:foodIngestList) {
+				temp[count][0]=Integer.toString(f.code);
+				temp[count][1]=f.name;
+				temp[count][2]=f.quantity;
+				temp[count][3]=f.date;
+				m.insertRow(count, new Object[]{temp[count][0],temp[count][1],temp[count][2],temp[count][3]});
+				count++;
+			}
+			
+			
+			
+		        //추가를 마치고 데이터 갱신을 알립니다.
+			 foodTable.updateUI();
+			
+			ActionListener buttonHandler = new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Object source = e.getSource();
+					try {
+						if(source == exit) { 
+							dispose();
+						}else if(source == foodInfo) { 
+							System.out.println("2");
+						}else if(source == cWeek) {
+							System.out.println("3");
+						}else if(source == cMonth) {
+							System.out.println("1");
+						}else if(source == cYear) {
+							System.out.println("1");
+						}
+					} catch (SafeFoodException ue) {
+					     ue.printStackTrace();	
+					}
+				}
+				
+			};
+			
+			// showFoods();
+			exit.addActionListener(buttonHandler);
+			foodInfo.addActionListener(buttonHandler);
+			cWeek.addActionListener(buttonHandler);
+			cMonth.addActionListener(buttonHandler);
+			cYear.addActionListener(buttonHandler);
+			
+			
+			addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent e){
+					dispose();
+				}
+			});
+			
+			setSize(1000, 400);
+			//setResizable(false);
+			pack();
+			setVisible(true);
+			
+		}
+		
+		
+	}
 }
 
